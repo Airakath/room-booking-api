@@ -1,0 +1,42 @@
+{
+  "name": "room-booking-api",
+  "version": "1.0.0",
+  "description": "API REST node.js",
+  "main": "server.js",
+  "scripts": {
+    "test": "mocha",
+    "lint": "./node_modules/.bin/eslint **/*.js",
+    "start": "npm run dev",
+    "dev": "nodemon --require dotenv/config server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Airakath/room-booking-api.git"
+  },
+  "keywords": [
+    "api",
+    "node.js"
+  ],
+  "author": "Nicolas Bernin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Airakath/room-booking-api/issues"
+  },
+  "homepage": "https://github.com/Airakath/room-booking-api#readme",
+  "dependencies": {
+    "app-module-path": "^2.2.0",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "helmet": "^3.23.3",
+    "mongoose": "^5.9.25",
+    "morgan": "^1.10.0",
+    "swagger-ui-express": "^4.1.4"
+  },
+  "devDependencies": {
+    "eslint": "^7.5.0",
+    "mocha": "^8.0.1",
+    "nodemon": "^2.0.4"
+  }
+}
