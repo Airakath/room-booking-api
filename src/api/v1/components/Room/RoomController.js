@@ -28,6 +28,7 @@ exports.createOne = (req, res) => {
 //Read one by Id
 exports.readOneById = (req, res) => {
 	Room.findById(req.params.id)
+		.populate('apartment')
 		.then(result => {
 			res.status(200).json(result);
 		})

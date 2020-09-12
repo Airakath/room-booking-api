@@ -36,7 +36,7 @@ class FakeApartmentGenerator extends EventEmitter {
 				let room = new Room({
 					number: i,
 					area: Math.random() * (40.0 - 9.0) + 9.0,
-					price: Math.floor(Math.random() * (1200000 - 350000)) + 350000,
+					price: Math.floor(Math.random() * (120000 - 35000)) + 35000,
 					apartment: apartment._id,
 				})
 
