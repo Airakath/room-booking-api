@@ -1,4 +1,5 @@
 const Apartment = require('./models/ApartmentModel');
+const Booking = require('../Booking/models/BookingModel');
 
 //READ all
 exports.readAll = (req, res) => {
@@ -58,4 +59,58 @@ exports.deleteOneById = (req, res) => {
 		.catch(err => {
 			res.status(400).json(err);
 		});
+};
+
+//READ all with rooms
+exports.readAllWithRooms = (req, res) => {
+	Apartment.aggregate([
+		{
+			$lookup: {
+				from: 'rooms',
+				localField: '_id',
+				foreignField: 'apartment',
+				as: 'rooms',
+			},
+		},
+		{
+			$unwind: '$rooms',
+		},
+	])
+		.then(result => {
+			res.status(200).json(result);
+		})
+		.catch(err => {
+			res.status(400).json(err);
+		});
+};
+
+//READ all with free rooms 
+exports.readAllWithFreeRooms = async (req, res) => {
+	try {
+		const bookings = await Booking.find();
+
+		const listApartmentWithRoom = await Apartment.aggregate([
+			{
+				$lookup: {
+					from: 'rooms',
+					localField: '_id',
+					foreignField: 'apartment',
+					as: 'room',
+				},
+			},
+			{
+				$unwind: '$room',
+			},
+			{
+				$match: {
+					'room._id': { $nin: bookings.map(booking => booking.room) },
+				},
+			},
+		]);
+		
+		res.status(200).json(listApartmentWithRoom);
+
+	} catch (err) {
+		res.status(400).json(err);
+	}
 };

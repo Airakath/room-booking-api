@@ -18,10 +18,6 @@ const ApartmentSchema = new Schema({
 	city: {
 		type: String,
 		trim: true,
-	},
-	country: {
-		type: String,
-		trim: true,
 	}
 });
 

@@ -15,6 +15,7 @@ const RoomSchema = new Schema({
 	apartment: {
 		type: Schema.Types.ObjectId,
 		ref: 'Apartment',
+		required: true,
 	},
 });
 

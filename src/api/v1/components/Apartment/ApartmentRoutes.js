@@ -13,6 +13,18 @@ router.route('/apartments')
 		ApartmentController.createOne
 	])
 
+router.route('/apartments/rooms')
+
+	.get([
+		ApartmentController.readAllWithRooms
+	])
+
+router.route('/apartments/freerooms')
+
+	.get([
+		ApartmentController.readAllWithFreeRooms
+	])
+
 router.route('/apartments/:id')
 
 	.get([
@@ -26,7 +38,6 @@ router.route('/apartments/:id')
 	.delete([
 		ApartmentController.deleteOneById
 	])
-
 	
 module.exports = router;
 
