@@ -14,6 +14,10 @@ CONFIG.db_name = process.env.DB_NAME;
 CONFIG.db_user = process.env.DB_USER;
 CONFIG.db_password = process.env.DB_PASSWORD;
 
+CONFIG.jwt_key_secret = process.env.JWT_KEY_SECRET;
+CONFIG.jwt_expiration = process.env.JWT_EXPIRATION;
+CONFIG.jwt_issuer = process.env.JWT_ISSUER;
+
 CONFIG.ssl_cert_url = process.env.SSL_CERT_URL;
 CONFIG.ssl_key_url = process.env.SSL_KEY_URL;
 CONFIG.ssl_chain_url = process.env.SSL_CHAIN_URL;

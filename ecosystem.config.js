@@ -29,6 +29,10 @@ module.exports = {
 				DB_USER: 'roombooking',
 				DB_PASSWORD: 'password',
 
+				JWT_KEY_SECRET: 'supersecret',
+				JWT_EXPIRATION: '365d',
+				JWT_ISSUER: 'https://localhost',
+
 				SSL_CERT_URL: 'cert/server.crt',
 				SSL_KEY_URL: 'cert/server.key',
 				SSL_CHAIN_URL: 'cert/server.csr',
@@ -47,6 +51,10 @@ module.exports = {
 				DB_NAME: 'roombooking-prod',
 				DB_USER: 'roombooking',
 				DB_PASSWORD: 'password',
+
+				JWT_KEY_SECRET: 'supersecret',
+				JWT_EXPIRATION: '365d',
+				JWT_ISSUER: 'https://cake-room.org/',
 
 				SSL_CERT_URL: '/home/roombooking.com/domains/api.roombooking.com/ssl.cert',
 				SSL_KEY_URL: '/home/roombooking.com/domains/api.roombooking.com/ssl.key',

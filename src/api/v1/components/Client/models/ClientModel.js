@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const Schema = mongoose.Schema;
 
@@ -43,5 +44,29 @@ const ClientSchema = new Schema({
 	}
 });
 
+ClientSchema.pre('save', function (next) {
+	const client = this;
+	bcrypt.genSalt(10, function (err, salt) {
+		if (err) {
+			return next(err);
+		}
+
+		bcrypt.hash(client.password, salt, function (err, hash) {
+			if (err) {
+				return next(err);
+			}
+			client.password = hash;
+			next();
+		});
+	});
+});
+
+ClientSchema.methods.isPasswordEqualTo = function (passwordReceived, done) {
+	bcrypt.compare(passwordReceived, this.password, function (err, isMatch) {
+		if (err) return done(err);
+
+		done(null, isMatch);
+	});
+}; 
 
 module.exports = mongoose.model('Client', ClientSchema);
