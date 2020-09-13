@@ -1,3 +1,974 @@
 {
-  
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Room Booking - API Documentation",
+        "version": "1.0.0-oas3",
+        "license": {
+            "name": "ISC"
+        },
+        "description": "[Specification JSON](/api-spec) - API REST"
+    },
+    "servers": [{
+            "url": "http://localhost:3000/api/v1"
+        },
+        {
+            "url": "https://api.cake-room.org/api/v1"
+        }
+    ],
+    "security": [],
+    "tags": [{
+            "name": "Auth",
+            "description": "Routes permettant de gérer les authentifications"
+        },
+        {
+            "name": "Client",
+            "description": "Routes permettant de gérer les clients"
+        },
+        {
+            "name": "Apartment",
+            "description": "Routes permettant de gérer les appartements"
+        },
+        {
+            "name": "Room",
+            "description": "Routes permettant de gérer les chambres"
+        },
+        {
+            "name": "Booking",
+            "description": "Routes permettant de gérer les réservations"
+        }
+    ],
+    "paths": {
+        "/signin": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Demande d'authentification",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "token": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "error message"
+                    }
+                }
+            }
+        },
+        "/signup": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Demande de création de compte",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Client"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "error message"
+                    }
+                }
+            }
+        },
+        "/clients": {
+            "get": {
+                "security": [{
+                    "BearerAuth": []
+                }],
+                "tags": [
+                    "Client"
+                ],
+                "summary": "Récupèrer la liste des clients",
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Client"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "error message"
+                    }
+                }
+            },
+            "post": {
+                "security": [{
+                    "BearerAuth": []
+                }],
+                "tags": [
+                    "Client"
+                ],
+                "summary": "Créer un client",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Client"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Client"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "error message"
+                    }
+                }
+            }
+        },
+        "/clients/{id}": {
+            "get": {
+                "security": [{
+                    "BearerAuth": []
+                }],
+                "tags": [
+                    "Client"
+                ],
+                "summary": "Récuperer un client",
+                "description": "Retourne un client",
+                "parameters": [{
+                    "name": "id",
+                    "in": "path",
+                    "description": "ID du client",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Client"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "error message"
+                    }
+                }
+            },
+            "patch": {
+                "security": [{
+                    "BearerAuth": []
+                }],
+                "tags": [
+                    "Client"
+                ],
+                "summary": "Modifier un client",
+                "parameters": [{
+                    "name": "id",
+                    "in": "path",
+                    "description": "ID du client",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Client"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Client"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "error message"
+                    }
+                }
+            },
+            "delete": {
+                "security": [{
+                    "BearerAuth": []
+                }],
+                "tags": [
+                    "Client"
+                ],
+                "summary": "Supprimer un client",
+                "parameters": [{
+                    "name": "id",
+                    "in": "path",
+                    "description": "ID du client",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Client"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "error message"
+                    }
+                }
+            }
+        },
+        "/apartments": {
+            "get": {
+                "security": [{
+                    "BearerAuth": []
+                }],
+                "tags": [
+                    "Apartment"
+                ],
+                "summary": "Récupèrer la liste des appartements",
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Apartment"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "error message"
+                    }
+                }
+            },
+            "post": {
+                "security": [{
+                    "BearerAuth": []
+                }],
+                "tags": [
+                    "Apartment"
+                ],
+                "summary": "Créer un appartement",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Apartment"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Apartment"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "error message"
+                    }
+                }
+            }
+        },
+        "/apartments/rooms": {
+            "get": {
+                "security": [{
+                    "BearerAuth": []
+                }],
+                "tags": [
+                    "Apartment"
+                ],
+                "summary": "Récuperer la liste des appartements avec chambre",
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Apartment"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "error message"
+                    }
+                }
+            }
+        },
+        "/apartments/freerooms": {
+            "get": {
+                "tags": [
+                    "Apartment"
+                ],
+                "summary": "Récuperer la liste des appartements avec chambre libre",
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Apartment"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "error message"
+                    }
+                }
+            }
+        },
+        "/apartments/{id}": {
+            "get": {
+                "security": [{
+                    "BearerAuth": []
+                }],
+                "tags": [
+                    "Apartment"
+                ],
+                "summary": "Récuperer un appartement",
+                "description": "Retourne un appartement",
+                "parameters": [{
+                    "name": "id",
+                    "in": "path",
+                    "description": "ID de l'appartement",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Apartment"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "error message"
+                    }
+                }
+            },
+            "patch": {
+                "security": [{
+                    "BearerAuth": []
+                }],
+                "tags": [
+                    "Apartment"
+                ],
+                "summary": "Modifier un appartement",
+                "parameters": [{
+                    "name": "id",
+                    "in": "path",
+                    "description": "ID de l'appartement",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Apartment"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Apartment"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "error message"
+                    }
+                }
+            },
+            "delete": {
+                "security": [{
+                    "BearerAuth": []
+                }],
+                "tags": [
+                    "Apartment"
+                ],
+                "summary": "Supprimer un appartement",
+                "parameters": [{
+                    "name": "id",
+                    "in": "path",
+                    "description": "ID de l'appartement",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Apartment"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "error message"
+                    }
+                }
+            }
+        },
+        "/rooms": {
+            "get": {
+                "security": [{
+                    "BearerAuth": []
+                }],
+                "tags": [
+                    "Room"
+                ],
+                "summary": "Récupèrer la liste des chambres",
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Room"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "error message"
+                    }
+                }
+            },
+            "post": {
+                "security": [{
+                    "BearerAuth": []
+                }],
+                "tags": [
+                    "Room"
+                ],
+                "summary": "Créer une chambre",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Room"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Room"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "error message"
+                    }
+                }
+            }
+        },
+        "/rooms/{id}": {
+            "get": {
+                "tags": [
+                    "Room"
+                ],
+                "summary": "Récuperer une chambre",
+                "description": "Retourne une chambre",
+                "parameters": [{
+                    "name": "id",
+                    "in": "path",
+                    "description": "ID de la chambre",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Room"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "error message"
+                    }
+                }
+            },
+            "patch": {
+                "security": [{
+                    "BearerAuth": []
+                }],
+                "tags": [
+                    "Room"
+                ],
+                "summary": "Modifier une chambre",
+                "parameters": [{
+                    "name": "id",
+                    "in": "path",
+                    "description": "ID de la chambre",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Room"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Room"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "error message"
+                    }
+                }
+            },
+            "delete": {
+                "security": [{
+                    "BearerAuth": []
+                }],
+                "tags": [
+                    "Room"
+                ],
+                "summary": "Supprimer une chambre",
+                "parameters": [{
+                    "name": "id",
+                    "in": "path",
+                    "description": "ID de la chambre",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Room"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "error message"
+                    }
+                }
+            }
+        },
+        "/bookings": {
+            "get": {
+                "security": [{
+                    "BearerAuth": []
+                }],
+                "tags": [
+                    "Booking"
+                ],
+                "summary": "Récupèrer la liste des réservations",
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Booking"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "error message"
+                    }
+                }
+            },
+            "post": {
+                "security": [{
+                    "BearerAuth": []
+                }],
+                "tags": [
+                    "Booking"
+                ],
+                "summary": "Créer une réservation",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Booking"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Booking"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "error message"
+                    }
+                }
+            }
+        },
+        "/bookings/{id}": {
+            "get": {
+                "security": [{
+                    "BearerAuth": []
+                }],
+                "tags": [
+                    "Booking"
+                ],
+                "summary": "Récuperer une réservation",
+                "description": "Retourne une réservation",
+                "parameters": [{
+                    "name": "id",
+                    "in": "path",
+                    "description": "ID de la réservation",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Booking"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "error message"
+                    }
+                }
+            },
+            "patch": {
+                "security": [{
+                    "BearerAuth": []
+                }],
+                "tags": [
+                    "Booking"
+                ],
+                "summary": "Modifier une réservation",
+                "parameters": [{
+                    "name": "id",
+                    "in": "path",
+                    "description": "ID de la réservation",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Booking"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Booking"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "error message"
+                    }
+                }
+            },
+            "delete": {
+                "security": [{
+                    "BearerAuth": []
+                }],
+                "tags": [
+                    "Booking"
+                ],
+                "summary": "Supprimer une réservation",
+                "parameters": [{
+                    "name": "id",
+                    "in": "path",
+                    "description": "ID de la réservation",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Booking"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "error message"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "BearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        },
+        "schemas": {
+            "Client": {
+                "properties": {
+                    "_id": {
+                        "type": "string"
+                    },
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "phone": {
+                        "type": "string"
+                    },
+                    "birthDate": {
+                        "type": "string"
+                    },
+                    "nationality": {
+                        "type": "string"
+                    },
+                    "role": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Apartment": {
+                "properties": {
+                    "_id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "street": {
+                        "type": "string"
+                    },
+                    "zipCode": {
+                        "type": "string"
+                    },
+                    "city": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Room": {
+                "properties": {
+                    "_id": {
+                        "type": "string"
+                    },
+                    "number": {
+                        "type": "number"
+                    },
+                    "area": {
+                        "type": "number"
+                    },
+                    "price": {
+                        "type": "number"
+                    },
+                    "apartment": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Booking": {
+                "properties": {
+                    "_id": {
+                        "type": "string"
+                    },
+                    "client": {
+                        "type": "string"
+                    },
+                    "room": {
+                        "type": "string"
+                    },
+                    "date": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
 }

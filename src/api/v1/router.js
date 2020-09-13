@@ -1,4 +1,6 @@
 const config = require('src/config/env.config.js');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./api-docs/swagger.json');
 
 const AuthRoutes = require('./components/Auth/AuthRoutes');
 const ApartmentRoutes = require('./components/Apartment/ApartmentRoutes');
@@ -8,6 +10,7 @@ const BookingRoutes = require('./components/Booking/BookingRoutes');
 
 const router = (app) => {
 
+  app.use(config.root_api + 'api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
   app.use(config.root_api, AuthRoutes);
   app.use(config.root_api, ApartmentRoutes);
   app.use(config.root_api, RoomRoutes);

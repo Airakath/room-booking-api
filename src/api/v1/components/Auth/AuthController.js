@@ -6,15 +6,15 @@ require('src/api/v1/components/Auth/middlewares/passport');
 
 exports.signup = async (req, res) => {
     try {      
-        const userExist = await Client.findOne({ email: req.body.email });
-        if (userExist) return res.status(400).json({
+        const clientExist = await Client.findOne({ email: req.body.email });
+        if (clientExist) return res.status(400).json({
             error: {
                 userMessage: "Un compte est déjà associé à cet email",
                 internalMessage: "email already existe"
             }            
         });
 
-        const user = new Client({
+        const client = new Client({
 			firstName: req.body.firstName,
 			lastName: req.body.lastName,
 			email: req.body.email,
@@ -24,7 +24,7 @@ exports.signup = async (req, res) => {
 			nationality: req.body.nationality,
 		});
 
-        const newClientCreated = await user.save();  
+        const newClientCreated = await client.save();  
         if (!newClientCreated) return res.status(400).json({ 
             error: {
                 userMessage: "Erreur lors de la sauvegarde du compte",
@@ -40,6 +40,7 @@ exports.signup = async (req, res) => {
 		});
 
     } catch (err) {
+        
         return res.status(400).json(err);
     }
 }
