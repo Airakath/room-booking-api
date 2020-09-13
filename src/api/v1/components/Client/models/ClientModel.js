@@ -33,15 +33,23 @@ const ClientSchema = new Schema({
 	phone: {
 		type: String,
 		trim: true,
+		required: true,
 	},
 	birthDate: {
 		type: Date,
 		trim: true,
+		required: true,
 	},
 	nationality: {
 		type: String,
 		trim: true,
-	}
+		required: true,
+	},
+	role: {
+		type: String,
+		enum: ['Customer', 'Admin'],
+		default: 'Customer',
+	},
 });
 
 ClientSchema.pre('save', function (next) {

@@ -3,20 +3,9 @@ const Client = require('../Client/models/ClientModel');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
 require('src/api/v1/components/Auth/middlewares/passport');
-const { identifiantValidation } = require('src/config/validation');
-const cryptoRandomString = require('crypto-random-string');
-
 
 exports.signup = async (req, res) => {
-    try {        
-        const validatorSchema = identifiantValidation(req.body);
-        if (validatorSchema.error) return res.status(400).json({
-            error: {
-                userMessage: validatorSchema.error.message,
-                internalMessage: validatorSchema.error.message,
-            }
-        });       
-        
+    try {      
         const userExist = await Client.findOne({ email: req.body.email });
         if (userExist) return res.status(400).json({
             error: {
@@ -26,13 +15,13 @@ exports.signup = async (req, res) => {
         });
 
         const user = new Client({
+			firstName: req.body.firstName,
+			lastName: req.body.lastName,
 			email: req.body.email,
 			password: req.body.password,
-			authorization: { role: 'Customer' },
-			accountConfirmation: {
-				token: cryptoRandomString({ length: 64, type: 'url-safe' }),
-				consume: false,
-			},
+			phone: req.body.phone,
+			birthDate: req.body.birthDate,
+			nationality: req.body.nationality,
 		});
 
         const newClientCreated = await user.save();  
@@ -51,8 +40,7 @@ exports.signup = async (req, res) => {
 		});
 
     } catch (err) {
-
-        return res.status(400).json({ error: 'Internal server error' });
+        return res.status(400).json(err);
     }
 }
 
@@ -86,7 +74,7 @@ function createToken(user) {
 			sub: user._id,
             iss: config.jwt_issuer,
             roles: [
-                user.authorization.role,
+                user.role,
             ]
 		},
 		config.jwt_key_secret,
