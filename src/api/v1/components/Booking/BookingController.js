@@ -16,16 +16,25 @@ exports.readAll = (req, res) => {
 };
 
 //Create one
-exports.createOne = (req, res) => {
-	const booking = new Booking(req.body);
-	booking
-		.save()
-		.then(result => {
-			res.status(201).json(result);
-		})
-		.catch(err => {
-			res.status(400).json(err);
+exports.createOne = async (req, res) => {
+	try {	
+		const bookingExist = await Booking.findOne({
+			client: req.body.client,
 		});
+		if(bookingExist) return res.status(400).json({
+			error: {
+				userMessage: 'Vous disposez déjà d\'une réservation, votre demande n\'a pas pu aboutir',
+				internalMessage: 'booking already existe',
+			},
+		});
+
+		const booking = await new Booking(req.body);
+
+		res.status(201).json(booking);
+
+	} catch (err) {
+		res.status(400).json(err);
+	}
 };
 
 //Read one by Id
