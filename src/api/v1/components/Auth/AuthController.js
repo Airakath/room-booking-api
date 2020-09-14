@@ -57,10 +57,12 @@ exports.signin = (req, res, next) => {
             }); 
 
             return res.status(200).json({
-                success: {
-                    token: createToken(user)
-                }
-            }); 
+				_id: user._id,
+				firstName: user.firstName,
+				lastName: user.lastName,
+				email: user.email,
+				token: createToken(user),
+			}); 
 
         }) (req, res, next);
     } catch (err) {
