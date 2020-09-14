@@ -17,6 +17,13 @@ router.route('/bookings')
 		BookingController.createOne
 	])
 
+router.route('/bookings/clients/:id')
+
+	.get([
+		passport.authenticate('jwt', {session: false}),
+		BookingController.readOneByClientId
+	])
+
 router.route('/bookings/:id')
 
 	.get([
