@@ -28,7 +28,7 @@ exports.createOne = async (req, res) => {
 			},
 		});
 
-		const booking = await new Booking(req.body);
+		const booking = await new Booking(req.body).save();
 
 		res.status(201).json(booking);
 

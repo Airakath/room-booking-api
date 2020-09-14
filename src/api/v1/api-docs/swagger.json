@@ -762,6 +762,45 @@
                 }
             }
         },
+        "/bookings/clients/{id}": {
+            "get": {
+                "security": [{
+                    "BearerAuth": []
+                }],
+                "tags": [
+                    "Booking"
+                ],
+                "summary": "Récuperer une réservation par id du client",
+                "description": "Récuperer une réservation par id du client",
+                "parameters": [{
+                    "name": "id",
+                    "in": "path",
+                    "description": "ID du client",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Booking"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "error message"
+                    }
+                }
+            }
+        },
         "/bookings/{id}": {
             "get": {
                 "security": [{
