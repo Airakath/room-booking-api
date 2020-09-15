@@ -11,7 +11,9 @@ Je vous souhaite un bon démarrage avec le projet
 
 #### Version
 Node: v12.18.1
+
 npm: v6.14.7
+
 mongoDB:v4.4.1
 
 #### Endpoint
