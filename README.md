@@ -1,6 +1,12 @@
 ﻿# room-booking-api
 API Rest Node.js | Application de réservation de chambre
 
+## Commentaire
+Vous trouverez dans le wiki le Quickstart pour une installation rapide du projet.
+J'ai également mis à disposition un script permettant de rapidement générer des appartements et chambres en BDD.
+
+Je vous souhaite un bon démarrage avec le projet
+
 ## Project
 
 #### Version
